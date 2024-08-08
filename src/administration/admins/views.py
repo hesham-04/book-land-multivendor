@@ -437,20 +437,27 @@ class ProductOtherPlatformDelete(View):
 
 @method_decorator(vendor_or_admin_required, name='dispatch')
 class OrderListView(ListView):
-    queryset = Order.objects.all()
     paginate_by = 25
+
+    def get_queryset(self):
+        # Get the current seller's profile
+        seller_profile = self.request.user.vendor_profile
+
+        # Filter orders that have order items associated with this seller
+        return Order.objects.filter(orderitem__seller=seller_profile).distinct()
 
     def get_context_data(self, **kwargs):
         context = super(OrderListView, self).get_context_data(**kwargs)
-        _filter = OrderFilter(self.request.GET, queryset=Order.objects.filter())
+        _filter = OrderFilter(self.request.GET, queryset=self.get_queryset())
         context['filter_form'] = _filter.form
 
-        paginator = Paginator(_filter.qs, 25)
+        paginator = Paginator(_filter.qs, self.paginate_by)
         page_number = self.request.GET.get('page')
         page_object = paginator.get_page(page_number)
 
         context['object_list'] = page_object
         return context
+
 
 
 @method_decorator(vendor_or_admin_required, name='dispatch')

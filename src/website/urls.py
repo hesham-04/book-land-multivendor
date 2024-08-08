@@ -20,8 +20,8 @@ urlpatterns = [
     path('cart/', CartTemplateView.as_view(), name='cart'),
     path('add_to_cart/', AddToCart.as_view(), name='add-to-cart'),
     path('remove-cart/', RemoveFromCartView.as_view(), name='remove-cart'),
-    path('increment/cart/item', IncrementCart.as_view(), name='increment'),
-    path('decrement/cart/item', DecrementCart.as_view(), name='decrement'),
+    #path('increment/cart/item', IncrementCart.as_view(), name='increment'),
+    #path('decrement/cart/item', DecrementCart.as_view(), name='decrement'),
 
     path('billing', OrderCreate.as_view(), name='order'),
     path('payment-success/', SuccessPayment.as_view(), name="success"),#NO PAGES

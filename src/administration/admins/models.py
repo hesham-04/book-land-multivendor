@@ -248,8 +248,10 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cart_set")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_version = models.ForeignKey(ProductVersion, on_delete=models.CASCADE)
+    seller = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="cart_items")  # New field
     quantity = models.PositiveIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.user.username

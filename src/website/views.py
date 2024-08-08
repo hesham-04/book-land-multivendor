@@ -211,13 +211,22 @@ class AddToCart(View):
     def post(self, request, *args, **kwargs):
         product_id = request.POST.get('product_id')
         version = request.POST.get('version_id')
-        cart, created = Cart.objects.get_or_create(user=self.request.user, product_id=product_id,
-                                                   product_version_id=version)
+        product = Product.objects.get(id=product_id)
+        seller = product.seller  # Assuming Product has a ForeignKey to SellerProfile
+
+        cart, created = Cart.objects.get_or_create(
+            user=self.request.user,
+            product_id=product_id,
+            product_version_id=version,
+            seller=seller  # Save the seller associated with the product
+        )
+
         if not created:
             cart.quantity += 1
         else:
             cart.quantity = 1
         cart.save()
+
         return redirect('website:cart')
 
 
@@ -263,7 +272,6 @@ stripe.api_key = 'sk_test_51MzSVMKxiugCOnUxT0YN5E7M8BhbZrzPFrx6NE6vRwmkTIYKREvGT
 class OrderCreate(View):
 
     def get(self, request):
-
         cart = Cart.objects.filter(user=self.request.user)
         amount = total_amount(self.request)
         context = {'form': OrderForm, 'cart': cart, 'total_amount': amount}
@@ -339,6 +347,18 @@ class OrderCreate(View):
             else:
                 pass
             order.save()
+
+            # Create OrderItems and associate with seller
+            for cart_item in cart:
+                OrderItem.objects.create(
+                    order=order,
+                    product=cart_item.product,
+                    product_version=cart_item.product_version,
+                    qty=cart_item.quantity,
+                    seller=cart_item.product.seller  # Assuming 'seller' is related to Product model
+                )
+            # Clear cart after creating the order
+            cart.delete()
 
             return redirect(checkout_session.url, code=303)
         else:
