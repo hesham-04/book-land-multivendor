@@ -104,9 +104,9 @@
                                     <ul class="book-info">
                                         <li>
                                             <div class="writer-info">
-                                                <img src="{% static 'images/profile2.jpg' %}" alt="book">
+                                                <img src="{{object.seller.user.profile_image.url}}" alt="book">
                                                 <div>
-                                                    <span>Writen by</span>{{object.author|first_word}}
+                                                    <span>Shop Name:</span>{{object.seller.user.username|first_word}}
                                                 </div>
                                             </div>
                                         </li>
@@ -123,6 +123,7 @@
 <!--                                                    href="{% url 'website:read_sample' object.id %}" target="_blank"><i-->
 <!--                                                    aria-hidden="true" class="fa fa-book fz-16 me-2"></i>Read Sample</a>-->
                                             {% endif %}
+
 
                                         </li>
                                     </ul>
@@ -165,6 +166,8 @@
 
                                     </div>
                                 </div>
+                                <a class="btn btn-solid btn btn-secondary mt-2" href="#" target="_blank" onclick="openChat({{object.seller.id}})"><i
+                                                    aria-hidden="true" class="fa fa-comment fz-16 me-2"></i>Contact Seller</a>
                             </div>
                         </div>
                     </div>

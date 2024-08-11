@@ -1,18 +1,64 @@
-<!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
+
+<!-- Mirrored from bookland.dexignzone.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Jul 2024 11:17:47 GMT -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Seller Profile</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content=""/>
+    <meta name="author" content="DexignZone"/>
+    <meta name="robots" content=""/>
+    <meta name="description" content="Bookland-Book Store Ecommerce Website"/>
+    <meta property="og:title" content="Bookland-Book Store Ecommerce Website"/>
+    <meta property="og:description" content="Bookland-Book Store Ecommerce Website"/>
+    <meta property="og:image" content="../../makaanlelo.com/tf_products_007/bookland/xhtml/social-image.html"/>
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- FAVICONS ICON -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}"/>
+
+    <!-- PAGE TITLE HERE -->
+    <title>Bookland Book Store Ecommerce Website</title>
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'icons/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+    <!-- GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+
+
 </head>
+
 <body>
-    <h1>Create Your Seller Profile</h1>
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Profile</button>
-    </form>
-
+<div class="container d-flex justify-content-center align-items-center h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col-md-12 text-center">
+            <h1>Seller Profile Creation Form</h1>
+            <p>This form is used to create seller profile. Please fill in all the required fields.</p>
+        </div>
+        <div class="col-md-12">
+            <form class="card shadow-lg p-3 mb-5 bg-white rounded" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
-</html>

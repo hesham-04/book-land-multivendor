@@ -38,12 +38,13 @@ def onboarding_view(request):
             if user_type == 'vendor':
                 request.user.is_seller = True
                 request.user.is_client = False
+                request.user.save()
+                return redirect('seller:profile_setup_form')
             else:
                 request.user.is_seller = False
                 request.user.is_client = True
-            request.user.save()
-            return redirect('seller:profile_setup_form')  # Redirect to the next step after onboarding
+                request.user.save()
+                return redirect('website:home')
     else:
         form = OnboardingForm()
-
     return render(request, 'accounts/onboarding.html', {'form': form})

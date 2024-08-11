@@ -39,6 +39,8 @@ GOOGLE_CALLBACK_ADDRESS = env('GOOGLE_CALLBACK_URL')
 SITE_ID = int(env('SITE_ID'))
 
 INSTALLED_APPS = [
+    'channels',
+    'daphne',
     'jazzmin',
 
     # DJANGO APPS
@@ -54,6 +56,7 @@ INSTALLED_APPS = [
     # STARTER APPS
     'crispy_forms',
     "crispy_bootstrap5",
+    'crispy_bootstrap4',
     'django_filters',
     'tinymce',
 
@@ -68,8 +71,13 @@ INSTALLED_APPS = [
     'src.accounts.apps.AccountsConfig',
     'src.administration.admins.apps.AdministrationAdminConfig',
     'src.administration.client.apps.ClientConfig',
-    'src.administration.seller.apps.SellerConfig'
+    'src.administration.seller.apps.SellerConfig',
+    'src.chat.apps.ChatConfig',
+
+
 ]
+
+
 
 MIDDLEWARE = [
     # DJANGO MIDDLEWARES
@@ -108,9 +116,22 @@ TEMPLATES = [
             ],
         },
     },
+
+
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+
+#ASGI
+ASGI_APPLICATION = 'core.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
+# WSGI_APPLICATION = 'core.wsgi.application'
 
 if ENVIRONMENT == 'server':
     DATABASES = {
@@ -361,3 +382,4 @@ JAZZMIN_UI_TWEAKS = {
     }
 }
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
